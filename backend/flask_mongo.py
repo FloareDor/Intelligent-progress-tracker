@@ -14,12 +14,12 @@ from datetime import datetime, timedelta
 import openai
 from flask_sslify import SSLify
 
-openai.api_key = "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"
+openai.api_key = ""
 
 def generate_quote(event):
     
     if event["progress"] == 1: #doing
-        prompt = f"Generate a creative motivational quote for completing the ongoing task '{event['title']}' with the description '{event['description']}'"
+        prompt = f"Generate a creative motivational quote within 13 words for completing the ongoing task '{event['title']}' with the description '{event['description']}'"
         response = openai.Completion.create( 
             engine="text-davinci-003" ,
             prompt=prompt,
@@ -31,7 +31,7 @@ def generate_quote(event):
         return response.choices[0].text.strip()
         
     if event["progress"] == 0: #done
-        prompt = f"Generate a creative appreciation quote for finishing the task '{event['title']}' with the description '{event['description']}'"
+        prompt = f"Generate a creative appreciation quote within 13 words for finishing the task '{event['title']}' with the description '{event['description']}'"
         response = openai.Completion.create( 
             engine="text-davinci-003" ,
             prompt=prompt,
@@ -44,7 +44,7 @@ def generate_quote(event):
         return response.choices[0].text.strip()
         
     if event["progress"] == 2: #overdue
-        prompt = f"Generate a creative motivating quote for the overdue task '{event['title']}' with the description '{event['description']}'"
+        prompt = f"Generate a creative motivating quote within 13 words for the overdue task '{event['title']}' with the description '{event['description']}'"
         response = openai.Completion.create( 
             engine="text-davinci-003" ,
             prompt=prompt,
@@ -57,7 +57,7 @@ def generate_quote(event):
         return quote
         
     if event["progress"] == 3: #upcoming
-        prompt = f"Generate a creative motivating quote for the upcoming task with title as '{event['title']}' and the description '{event['description']}'"
+        prompt = f"Generate a creative motivating quote within 13 words for the upcoming task with title as '{event['title']}' and the description '{event['description']}'"
         response = openai.Completion.create( 
             engine="text-davinci-003" ,
             prompt=prompt,
@@ -77,7 +77,7 @@ def parse_json(data):
     return json.loads(json_util.dumps(data))
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 sslify = SSLify(app)
 
 client = MongoClient("mongodb://localhost:27017/")
@@ -182,7 +182,7 @@ def create():
                         "type": data.get('type'),
                         "progress": 0
                     }
-        #quote = generate_quote(my_data)
+        quote = generate_quote(my_data)
         my_data = {   
                         "id": unique_id,
                         "title": data.get('title'),
@@ -193,7 +193,7 @@ def create():
                         "deadline": data.get('deadline'),
                         "type": data.get('type'),
                         "progress": 0,
-                        "quote": 'quote'
+                        "quote": quote
                     }
 
         collection.insert_one(my_data)
@@ -203,8 +203,7 @@ def create():
 
     except Exception as e:
         printf(e)
-        return ({"Exception": e})
-
+        return ({"Exception": "ERRROROROROROROROOR" + e})
     
 
 @app.route("/api/read", methods=["POST", "GET"])
