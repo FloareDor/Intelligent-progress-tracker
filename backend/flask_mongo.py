@@ -138,6 +138,7 @@ two = {
 collection.insert_one(one)
 collection.insert_one(two)
 
+
 printf(collection)
 
 def fetch():
@@ -160,6 +161,11 @@ def fetch():
 def route():
     return "Hello World!"
 
+@app.route("/api/clearall")
+def clear():
+    collection.delete_many({})
+    return "Cleared all"
+
 @app.route("/api/create", methods=["POST", "GET"])
 def create():
     data = request.json
@@ -171,22 +177,23 @@ def create():
                         "title": data.get('title'),
                         "description": data.get('description'),
                         "duration": data.get('duration'),
-                        "date": str(datetime.today().replace(microsecond=0)),
+                        "date": str("2023-04-01"),
                         "deadline": data.get('deadline'),
                         "type": data.get('type'),
                         "progress": 0
                     }
-        quote = generate_quote(my_data)
+        #quote = generate_quote(my_data)
         my_data = {   
                         "id": unique_id,
                         "title": data.get('title'),
                         "description": data.get('description'),
                         "duration": data.get('duration'),
-                        "date": str(datetime.today().replace(microsecond=0)),
+                        #"date": str(datetime.today().replace(microsecond=0)),
+                        "date": str("2023-04-01"),
                         "deadline": data.get('deadline'),
                         "type": data.get('type'),
                         "progress": 0,
-                        "quote": quote
+                        "quote": 'quote'
                     }
 
         collection.insert_one(my_data)
