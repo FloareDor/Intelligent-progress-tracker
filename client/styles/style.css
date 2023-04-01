@@ -110,6 +110,9 @@ body {
     width:80%;
     margin: auto;
 }
+.titleTask h1 {
+    font-size: 1rem;
+}
 .contentDiv {
     width:80%;
     margin: auto;
@@ -125,4 +128,18 @@ body {
     width:80%;
     margin: auto;
     justify-content: space-between;
+}
+
+.inputTask {
+    background-color: rgb(48, 48, 44);
+    border-color: aliceblue;
+}
+
+.inputTask input {
+    width: 25%;
+    background-color: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    
 }
