@@ -1,9 +1,7 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
-import bson
 from bson import json_util
 from datetime import datetime
-import logging
 import sys
 import uuid
 import json
