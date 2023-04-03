@@ -26,7 +26,7 @@ def generate_quote(event):
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=0.5,
+            temperature=0.8,
             )
         return response.choices[0].text.strip()
         
@@ -51,7 +51,7 @@ def generate_quote(event):
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=0.5,
+            temperature=0.8,
             )
         quote = response.choices[0].text.strip()
         return quote
@@ -64,7 +64,7 @@ def generate_quote(event):
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=0.5,
+            temperature=0.8,
             )
         quote = response.choices[0].text.strip()
         return quote
@@ -314,4 +314,4 @@ def optimize():
     return d
 
 if __name__ == "__main__":
-    app.run(host="64.227.168.53", port=5000, debug=True)
+    app.run(host="localhost", port=5000, debug=True)
